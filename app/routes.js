@@ -8,6 +8,18 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
+	app.get('/onlogin', function(req, res) {
+		res.render('onLogin.ejs'); // load the index.ejs file
+	});
+
+	app.get('/about', function(req, res) {
+		res.render('about.ejs'); // load the index.ejs file
+	});
+
+	app.get('/contact', function(req, res) {
+		res.render('contact.ejs'); // load the index.ejs file
+	});
+
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -20,7 +32,7 @@ module.exports = function(app, passport) {
 
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/onlogin', // redirect to the secure profile section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
 		}),
