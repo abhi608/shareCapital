@@ -1,0 +1,16 @@
+Introduction:
+- https://en.wikipedia.org/wiki/Blockchain_(database)
+- https://www.youtube.com/watch?v=Fqr8_iQv8hU
+- https://blockchain.info/
+
+Tutorials:
+- https://bitsonblocks.net/2015/09/09/a-gentle-introduction-to-blockchain-technology/
+- https://blog.blockchain.com/category/tutorials-and-guides/
+- http://marmelab.com/blog/2016/04/28/blockchain-for-web-developers-the-theory.html
+- http://marmelab.com/blog/2016/04/28/blockchain-for-web-developers-the-theory.html
+- http://marmelab.com/blog/2016/06/14/blockchain-for-web-developers-the-truth.html
+- http://scet.berkeley.edu/wp-content/uploads/BlockchainPaper.pdf
+
+NodeJS libraries:
+- https://github.com/IBM-Blockchain/ibm-blockchain-js
+- https://www.npmjs.com/package/blockchain
