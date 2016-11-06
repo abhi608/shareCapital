@@ -2,8 +2,8 @@
 module.exports = {
     'connection': {
         'host': 'localhost',
-        'user': 'root',
-        'password': 'YOUR_PASSWORD_HERE'
+        'user': 'cs252_user',
+        'password': 'project'
     },
     'database': 'shareCapital',
     'users_table': 'users'
