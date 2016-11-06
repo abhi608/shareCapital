@@ -13,13 +13,11 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/about', function(req, res) {
-		var fs = require ("fs");
-		 var data = fs.readFileSync("./scripts/script1.sh","utf8");
-		 var spawn = require('child_process').spawn;
-		 console.log(data);
-		 var shellSyntaxCommand = data;
-		 spawn('sh', ['-c', shellSyntaxCommand], { stdio: 'inherit' });
-		res.render('about.ejs'); // load the index.ejs file
+		var data = {"a":1};
+data = JSON.stringify(data);
+		console.log(data);
+		res.render(data);
+		//res.render('about.ejs'); // load the index.ejs file
 	});
 
 	app.get('/contact', function(req, res) {
