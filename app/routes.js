@@ -8,9 +8,9 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
-	app.get('/onlogin', function(req, res) {
-		res.render('onLogin.ejs'); // load the index.ejs file
-	});
+	// app.get('/onlogin', function(req, res) {
+	// 	res.render('onLogin.ejs'); // load the index.ejs file
+	// });
 
 	app.get('/about', function(req, res) {
 		var fs = require ("fs");
@@ -19,6 +19,17 @@ module.exports = function(app, passport) {
 		 console.log(data);
 		 var shellSyntaxCommand = data;
 		 spawn('sh', ['-c', shellSyntaxCommand], { stdio: 'inherit' });
+		 //console.log(x);
+		 var exec = require('child_process').exec;
+		 var child;
+		 child = exec(data,
+		   function (error, stdout, stderr) {
+		      console.log('stdout: ' + stdout);
+		      console.log('stderr: ' + stderr);
+		      if (error !== null) {
+		          console.log('exec error: ' + error);
+		      }
+		   });
 		res.render('about.ejs'); // load the index.ejs file
 	});
 
@@ -36,6 +47,7 @@ module.exports = function(app, passport) {
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
 
+
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
             successRedirect : '/onlogin', // redirect to the secure profile section
@@ -50,6 +62,18 @@ module.exports = function(app, passport) {
             } else {
               req.session.cookie.expires = false;
             }
+            var fs = require ("fs");
+		 	var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
+		 	var exec = require('child_process').exec;
+			 var child;
+			 child = exec(data,
+			   function (error, stdout, stderr) {
+			      console.log('stdout: ' + stdout);
+			      console.log('stderr: ' + stderr);
+			      if (error !== null) {
+			          console.log('exec error: ' + error);
+			      }
+			   });
         res.redirect('/');
     });
 
@@ -64,7 +88,7 @@ module.exports = function(app, passport) {
 
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/profile', // redirect to the secure profile section
+		successRedirect : '/login', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
@@ -75,10 +99,28 @@ module.exports = function(app, passport) {
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
+		//console.log(req.user);
 		res.render('profile.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
+
+	app.get('/onlogin', function(req, res) {
+		console.log(req.user.hash.substring(0,req.user.hash.length-1));
+		var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		// var fs = require ("fs");
+	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
+	 	var data = 'multichain-cli chain101 liststreampublisheritems stream101 ' + hash;
+	 	const execSync = require('child_process').execSync;
+	 	code = execSync(data);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		// render the page and pass in any flash data if it exists
+		res.render('onLogin.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
 
 	// =====================================
 	// LOGOUT ==============================

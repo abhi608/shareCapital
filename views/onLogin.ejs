@@ -17,14 +17,30 @@
 		      			<a class="navbar-brand" href="/">Share Capital</a>
 		    		</div>
 		    		<ul class="nav navbar-nav">
-		      			<li class="active"><a href="#">My Expenses</a></li>
+		      			<li class="active"><a href="/onlogin">Transaction History</a></li>
 		      			<li><a href="/profile">Profile</a></li>
 		    		</ul>
 		  		</div>
 			</nav>
 		  
-			<div class="container">
-		  		<h3>This would be the basic homepage of the user</h3>
+<div class="container">
+
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span> Your Transaction History</h3>
+
+					<p>
+						<strong>History</strong>: <%= user %><br>
+					</p>
+
 			</div>
+		</div>
+
+	</div>
+
+</div>
 		</body>
 	</html>

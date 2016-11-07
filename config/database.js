@@ -2,9 +2,9 @@
 module.exports = {
     'connection': {
         'host': 'localhost',
-        'user': 'cs252_user',
-        'password': 'project'
+        'user': 'root',
+        'password': 'vanshika608'
     },
-    'database': 'shareCapital',
+    'database': 'share_database',
     'users_table': 'users'
 };

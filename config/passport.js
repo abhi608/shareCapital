@@ -9,6 +9,10 @@ var bcrypt = require('bcrypt-nodejs');
 var dbconfig = require('./database');
 var connection = mysql.createConnection(dbconfig.connection);
 
+var exec = require('child_process').exec;
+var fs = require('fs');
+
+
 connection.query('USE ' + dbconfig.database);
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -56,18 +60,29 @@ module.exports = function(passport) {
                 } else {
                     // if there is no user with that username
                     // create the user
-                    var newUserMysql = {
-                        username: username,
-                        password: bcrypt.hashSync(password, null, null)  // use the generateHash function in our user model
-                    };
 
-                    var insertQuery = "INSERT INTO users ( username, password ) values (?,?)";
+                    var child;
+                    var data = fs.readFileSync("./scripts/getHash.sh","utf8");
+                    child = exec(data,
+                        function (error, stdout, stderr){
+                            console.log('stdout: ' + stdout);
+                            var newUserMysql = {
+                                username: username,
+                                password: bcrypt.hashSync(password, null, null)  // use the generateHash function in our user model
+                            };
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
-                        newUserMysql.id = rows.insertId;
+                           
 
-                        return done(null, newUserMysql);
-                    });
+                            var insertQuery = "INSERT INTO users ( username, password, hash ) values (?,?,?)";
+
+                            connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, stdout],function(err, rows) {
+                                newUserMysql.id = rows.insertId;
+
+                                return done(null, newUserMysql);
+                            });
+
+                        });
+                   
                 }
             });
         })
