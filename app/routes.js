@@ -13,6 +13,12 @@ module.exports = function(app, passport) {
 		var amount=req.query.mytext2;
 		console.log("Sender: "+sender);
 		console.log("Amount: "+amount);
+		var data=sender+" owes "+req.user.username+" an amount of "+amount;
+		data=hexEncode(data);
+		var fs=require ("fs");
+		var file=fs.readFileSync("./scripts/new_transaction.sh", "utf8");
+		file=file+" "+data;
+		console.log(file);
 		res.render('transaction.ejs');
 	});
 
@@ -156,4 +162,27 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	res.redirect('/');
+}
+
+function hexEncode(str){
+    var hex, i;
+
+    var result = "";
+    for (i=0; i<str.length; i++) {
+        hex = str.charCodeAt(i).toString(16);
+        result += ("000"+hex).slice(-4);
+    }
+
+    return result;
+}
+
+function hexDecode(str){
+    var j;
+    var hexes = str.match(/.{1,4}/g) || [];
+    var back = "";
+    for(j = 0; j<hexes.length; j++) {
+        back += String.fromCharCode(parseInt(hexes[j], 16));
+    }
+
+    return back;
 }
