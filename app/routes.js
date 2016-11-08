@@ -8,6 +8,10 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
+	app.get('/transaction', function(req, res) {
+		res.render('transaction.ejs'); // load the index.ejs file
+	});
+
 	// app.get('/onlogin', function(req, res) {
 	// 	res.render('onLogin.ejs'); // load the index.ejs file
 	// });
