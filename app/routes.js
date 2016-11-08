@@ -21,8 +21,14 @@ module.exports = function(app, passport) {
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		
-		res.render('transaction.ejs');
+		var data1 = 'multichain-cli chain252 liststreamitems stream1';
+	 	code = execSync(data1);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		// render the page and pass in any flash data if it exists
+		res.render('onLogin.ejs', {
+			user : code // get the user out of session and pass to template
+		});
 	});
 
 	app.get('/transaction', function(req, res) {
