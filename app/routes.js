@@ -110,8 +110,12 @@ module.exports = function(app, passport) {
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		// var fs = require ("fs");
 	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
-	 	var data = 'multichain-cli chain251 liststreampublisheritems stream1 ' + hash;
+	 	var data1 = 'multichaind chain252 -daemon';
+	 	var data2 = 'multichain-cli chain252 subscribe stream1';
+	 	var data = 'multichain-cli chain252 liststreampublisheritems stream1 ' + hash;
 	 	const execSync = require('child_process').execSync;
+	 	code = execSync(data1);
+	 	code = execSync(data2);
 	 	code = execSync(data);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);

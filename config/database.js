@@ -5,6 +5,6 @@ module.exports = {
         'user': 'root',
         'password': 'vanshika608'
     },
-    'database': 'share_database',
+    'database': 'blockchain1',
     'users_table': 'users'
 };
