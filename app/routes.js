@@ -11,7 +11,8 @@ module.exports = function(app, passport) {
 	app.get('/myform', function(req, res) {
 		var sender=req.query.mytext;
 		var amount=req.query.mytext2;
-		console.log(sender+" "+amount);
+		console.log("Sender: "+sender);
+		console.log("Amount: "+amount);
 		res.render('transaction.ejs');
 	});
 
