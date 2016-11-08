@@ -8,6 +8,13 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
+	app.get('/myform', function(req, res) {
+		var sender=req.query.mytext;
+		var amount=req.query.mytext2;
+		console.log(sender+" "+amount);
+		res.render('transaction.ejs');
+	});
+
 	app.get('/transaction', function(req, res) {
 		res.render('transaction.ejs'); // load the index.ejs file
 	});
