@@ -15,9 +15,7 @@ module.exports = function(app, passport) {
 		console.log("Amount: "+amount);
 		var data=sender+" owes "+req.user.username+" an amount of "+amount;
 		data=hexEncode(data);
-		var fs=require ("fs");
-		var file=fs.readFileSync("./scripts/new_transaction.sh", "utf8");
-		file=file+" "+data;
+		file=" bash ./scripts/new_transaction.sh "+data;
 		console.log(file);
 		const execSync = require('child_process').execSync;
 	 	code = execSync(file);
