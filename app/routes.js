@@ -19,6 +19,11 @@ module.exports = function(app, passport) {
 		var file=fs.readFileSync("./scripts/new_transaction.sh", "utf8");
 		file=file+" "+data;
 		console.log(file);
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		
 		res.render('transaction.ejs');
 	});
 
