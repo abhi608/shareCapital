@@ -17,32 +17,17 @@
 		      			<a class="navbar-brand" href="/">Share Capital</a>
 		    		</div>
 		    		<ul class="nav navbar-nav">
-		      			<li class="active"><a href="/onlogin">Transaction History</a></li>
+		      			<li><a href="/onlogin">Transaction History</a></li>
 		      			<li><a href="/profile">Profile</a></li>
-		      			<li><a href="#">New Transaction</a></li>
+		      			<li class="active"><a href="#">New Transaction</a></li>
 		      			
 		    		</ul>
 		  		</div>
 			</nav>
-		  
-<div class="container">
-
-	<div class="row">
-
-		<!-- LOCAL INFORMATION -->
-		<div class="col-sm-6">
-			<div class="well">
-				<h3><span class="fa fa-user"></span> Your Transaction History</h3>
-
-					<p>
-						<strong>History</strong>: <%= user %><br>
-					</p>
-
-			</div>
-		</div>
-
-	</div>
-
-</div>
+			<form action="/myform" method="GET">
+		  		<input type="text" name="mytext" requried />
+				<p4>owes me an amount of </p4>
+				<input type="text" name="mytext2" requried />
+			</form>
 		</body>
 	</html>
