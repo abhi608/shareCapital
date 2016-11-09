@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
-	app.get('/myform', function(req, res) {
+	app.get('/myform1', function(req, res) {
 		var sender=req.query.mytext;
 		var amount=req.query.mytext2;
 		console.log("Sender: "+sender);
@@ -21,12 +21,61 @@ module.exports = function(app, passport) {
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain252 liststreamitems stream1';
+		var data1 = 'multichain-cli chain771 liststreamitems stream1';
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
 		// render the page and pass in any flash data if it exists
 		res.render('onLogin.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
+	app.get('/myform2', function(req, res) {
+		var sender=req.query.mytext3;
+		var amount=req.query.mytext4;
+		console.log("Sender: "+sender);
+		console.log("Amount: "+amount);
+		var data=sender+" paid "+req.user.username+" an amount of "+amount;
+		data=hexEncode(data);
+		var file=" bash ./scripts/new_transaction.sh "+data;
+		console.log(file);
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		var data1 = 'multichain-cli chain771 liststreamitems stream1';
+	 	code = execSync(data1);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		// render the page and pass in any flash data if it exists
+		res.render('onLogin.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
+	app.get('/mytransactions', function(req, res) {
+		console.log(req.user.hash.substring(0,req.user.hash.length-1));
+		var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		var file = "bash ./scripts/publisher_items.sh " + hash;
+		console.log(file);
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		res.render('mytransactions.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
+	app.get('/getinfo', function(req, res) {
+		var file = "bash ./scripts/getinfo.sh";
+		console.log(file);
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+	 	res.render('getinfo.ejs', {
 			user : code // get the user out of session and pass to template
 		});
 	});
@@ -137,9 +186,9 @@ module.exports = function(app, passport) {
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		// var fs = require ("fs");
 	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
-	 	var data1 = 'multichaind chain252 -daemon';
-	 	var data2 = 'multichain-cli chain252 subscribe stream1';
-	 	var data = 'multichain-cli chain252 liststreamitems stream1';
+	 	var data1 = 'multichaind chain771 -daemon';
+	 	var data2 = 'multichain-cli chain771 subscribe stream1';
+	 	var data = 'multichain-cli chain771 liststreamitems stream1';
 	 	const execSync = require('child_process').execSync;
 	 	code = execSync(data1);
 	 	code = execSync(data2);

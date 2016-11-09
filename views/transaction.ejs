@@ -17,17 +17,27 @@
 		      			<a class="navbar-brand" href="/">Share Capital</a>
 		    		</div>
 		    		<ul class="nav navbar-nav">
-		      			<li><a href="/onlogin">Transaction History</a></li>
+		      			<li><a href="/onlogin">All Transactions</a></li>
+		      			<li><a href="/mytransactions">My Transactions</a></li>
 		      			<li><a href="/profile">Profile</a></li>
 		      			<li class="active"><a href="/transaction">New Transaction</a></li>
+		      			<li><a href="/getinfo">Blockchain Info</a></li>
 		      			
 		    		</ul>
 		  		</div>
 			</nav>
-			<form action="/myform" method="GET">
+			<form action="/myform1" method="GET">
+				<p4>I owe </p4>
 		  		<input type="text" name="mytext" requried />
-				<p4>owes me an amount of </p4>
+				<p4>an amount of </p4>
 				<input type="text" name="mytext2" requried />
+				<input type="submit" value="Submit"/>
+			</form>
+			<hr>
+			<form action="/myform2" method="GET">
+				<input type="text" name="mytext3" requried />
+				<p4> paid me an amount of </p4>
+				<input type="text" name="mytext4" requried />
 				<input type="submit" value="Submit"/>
 			</form>
 		</body>
