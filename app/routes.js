@@ -8,63 +8,130 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
+	app.get('/nikhil', function (req, res) {
+		var path = require('path'),
+    	fs = require('fs');
+    	res.sendfile(path.resolve('./views/images/nikhil.jpg'));
+	});
+
+	app.get('/animesh', function (req, res) {
+		var path = require('path'),
+    	fs = require('fs');
+    	res.sendfile(path.resolve('./views/images/animeshr.jpg'));
+	});
+
+	app.get('/abhishek', function (req, res) {
+		var path = require('path'),
+    	fs = require('fs');
+    	res.sendfile(path.resolve('./views/images/abhishek.jpg'));
+	});
+
+	app.get('/background', function (req, res) {
+		var path = require('path'),
+    	fs = require('fs');
+    	res.sendfile(path.resolve('./views/images/blockchain-ledger.jpg'));
+	});
+
+	app.get('/createstream', function (req, res) {
+		var stream_name = req.query.mytext5;
+		var file = "multichain-cli chain300 create stream " + stream_name + " true";
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	file = "multichain-cli chain300 subscribe " + stream_name;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+	 	res.render('transaction.ejs');
+	});
+
 	app.get('/myform1', function(req, res) {
 		var sender=req.query.mytext;
 		var amount=req.query.mytext2;
+		var stream_name=req.query.mytext8;
 		console.log("Sender: "+sender);
 		console.log("Amount: "+amount);
 		var data=sender+" owes "+req.user.username+" an amount of "+amount;
 		data=hexEncode(data);
-		file=" bash ./scripts/new_transaction.sh "+data;
-		console.log(file);
 		const execSync = require('child_process').execSync;
-	 	code = execSync(file);
+		var file = "multichain-cli chain300 subscribe " + stream_name;
+		code = execSync(file);
+		file=" bash ./scripts/new_transaction.sh "+data + " " + stream_name;
+		console.log(file);
+		code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain771 liststreamitems stream1';
+		var data1 = 'multichain-cli chain300 liststreamitems ' + stream_name;
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
 		// render the page and pass in any flash data if it exists
 		res.render('onLogin.ejs', {
-			user : code // get the user out of session and pass to template
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
 		});
 	});
 
 	app.get('/myform2', function(req, res) {
 		var sender=req.query.mytext3;
 		var amount=req.query.mytext4;
+		var stream_name=req.query.mytext9;
 		console.log("Sender: "+sender);
 		console.log("Amount: "+amount);
 		var data=sender+" paid "+req.user.username+" an amount of "+amount;
 		data=hexEncode(data);
-		var file=" bash ./scripts/new_transaction.sh "+data;
-		console.log(file);
 		const execSync = require('child_process').execSync;
+		var file = "multichain-cli chain300 subscribe " + stream_name;
+		code = execSync(file);
+		file=" bash ./scripts/new_transaction.sh "+data + " " + stream_name;
+		console.log(file);
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain771 liststreamitems stream1';
+		var data1 = 'multichain-cli chain300 liststreamitems ' + stream_name;
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
 		// render the page and pass in any flash data if it exists
 		res.render('onLogin.ejs', {
-			user : code // get the user out of session and pass to template
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
 		});
 	});
 
 	app.get('/mytransactions', function(req, res) {
+
 		console.log(req.user.hash.substring(0,req.user.hash.length-1));
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
-		var file = "bash ./scripts/publisher_items.sh " + hash;
-		console.log(file);
 		const execSync = require('child_process').execSync;
+		var stream_name = "stream1";
+		var file = "multichain-cli chain300 subscribe stream1";
+		code = execSync(file);
+		file = "bash ./scripts/publisher_items.sh " + "1JMV1SMvQ5qUSZqGfozVfeTgfacS2BDfrrYLCm" + " " + stream_name;
+		console.log(file);
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+	 			res.render('mytransactions.ejs', {
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
+		});
+	});
+
+	app.get('/mytransactions1', function(req, res) {
+		var stream_name = req.query.mytext6;
+		console.log(req.user.hash.substring(0,req.user.hash.length-1));
+		var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		const execSync = require('child_process').execSync;
+		var file = "multichain-cli chain300 subscribe " + stream_name;
+		code = execSync(file);
+		file = "bash ./scripts/publisher_items.sh " + "1JMV1SMvQ5qUSZqGfozVfeTgfacS2BDfrrYLCm" + " " + stream_name;
+		console.log(file);
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
 		res.render('mytransactions.ejs', {
-			user : code // get the user out of session and pass to template
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
 		});
 	});
 
@@ -181,14 +248,48 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/query', function(req, res) {
+		var stream_name = req.query.mytext6;
+		var file = "multichain-cli chain300 subscribe "+stream_name;
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	file = "multichain-cli chain300 liststreamitems "+stream_name;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		// render the page and pass in any flash data if it exists
+		res.render('onLogin.ejs', {
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
+		});
+		// render the page and pass in any flash data if it exists
+	});
+
+	app.get('/query1', function(req, res) {
+		var stream_name = req.query.mytext6;
+		var file = "multichain-cli chain300 subscribe "+stream_name;
+		const execSync = require('child_process').execSync;
+	 	code = execSync(file);
+	 	file = "multichain-cli chain300 liststreamitems "+stream_name;
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		// render the page and pass in any flash data if it exists
+		res.render('mytransactions.ejs', {
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
+		});
+		// render the page and pass in any flash data if it exists
+	});
+
 	app.get('/onlogin', function(req, res) {
 		console.log(req.user.hash.substring(0,req.user.hash.length-1));
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		// var fs = require ("fs");
 	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
-	 	var data1 = 'multichaind chain771 -daemon';
-	 	var data2 = 'multichain-cli chain771 subscribe stream1';
-	 	var data = 'multichain-cli chain771 liststreamitems stream1';
+	 	var data1 = 'multichaind chain300 -daemon';
+	 	var data2 = 'multichain-cli chain300 subscribe stream1';
+	 	var data = 'multichain-cli chain300 liststreamitems stream1';
 	 	const execSync = require('child_process').execSync;
 	 	code = execSync(data1);
 	 	code = execSync(data2);
@@ -196,8 +297,10 @@ module.exports = function(app, passport) {
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
 		// render the page and pass in any flash data if it exists
+		var stream_name = "stream1";
 		res.render('onLogin.ejs', {
-			user : code // get the user out of session and pass to template
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
 		});
 	});
 

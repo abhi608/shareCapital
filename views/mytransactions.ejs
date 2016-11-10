@@ -31,9 +31,18 @@
 	<div class="row">
 
 		<!-- LOCAL INFORMATION -->
+		<div class="abs-back">
+			<div class="wel">	  
+			<form action="/mytransactions1" method="GET">
+				<p3><b><font color="black">Enter the stream name </font></b></p3>
+		  		<input type="text" name="mytext6" requried />
+				<input type="submit" value="Submit"/>
+			</form>
+			</div>
+		</div>
 		<div class="col-sm-6">
 			<div class="well">
-				<h3><span class="fa fa-user"></span>My Transactions</h3>
+				<h3><span class="fa fa-user"></span>My Transactions on <%= stream_name %></h3>
 
 					<p>
 						<strong>Transaction History</strong>: <%= user %><br>

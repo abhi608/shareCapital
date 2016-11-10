@@ -50,7 +50,7 @@ form {
 		      			<a class="navbar-brand" href="/">Share Capital</a>
 		    		</div>
 		    		<ul class="nav navbar-nav">
-		      			<li><a href="/onlogin">All Transactions</a></li>
+		      			<li><a href="/query">Query Transactions</a></li>
 		      			<li><a href="/mytransactions">My Transactions</a></li>
 		      			<li><a href="/profile">Profile</a></li>
 		      			<li class="active"><a href="/transaction">New Transaction</a></li>
@@ -61,30 +61,11 @@ form {
 			</nav>
 			
 			<header id="full">
-			<div class="abs-back"></div>
+			<div class="abs-back">
 			<div class="wel">	  
-			<form action="/myform1" method="GET">
-				<p3><b><font color="black">I owe </font></b></p3>
-		  		<input type="text" name="mytext" requried />
-				<p4><b><font color="black">an amount of </font></b></p4>
-				<input type="text" name="mytext2" requried />
-				<p4><b><font color="black">on stream </font></b></p4>
-				<input type="text" name="mytext8" requried />
-				<input type="submit" value="Submit"/>
-			</form>
-			<hr>
-			<form action="/myform2" method="GET">
-				<input type="text" name="mytext3" requried />
-				<p4><b><font color="black"> paid me an amount of </font></b></p4>
-				<input type="text" name="mytext4" requried />
-				<p4><b><font color="black"> on stream </font></b></p4>
-				<input type="text" name="mytext9" requried />
-				<input type="submit" value="Submit"/>
-			</form>
-			<hr>
-			<form action="/createstream" method="GET">
-				<p4><b><font color="black">Create Stream with a name of</font></b></p4>
-				<input type="text" name="mytext5" requried />
+			<form action="/onlogin" method="GET">
+				<p3><b><font color="black">Enter the stream name </font></b></p3>
+		  		<input type="text" name="mytext6" requried />
 				<input type="submit" value="Submit"/>
 			</form>
 			</div>

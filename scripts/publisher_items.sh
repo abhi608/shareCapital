@@ -1,2 +1,2 @@
 #!/bin/bash
-multichain-cli chain771 liststreampublisheritems stream1 $1
+multichain-cli chain300 liststreampublisheritems $2 $1
