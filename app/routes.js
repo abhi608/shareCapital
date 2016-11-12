@@ -34,10 +34,10 @@ module.exports = function(app, passport) {
 
 	app.get('/createstream', function (req, res) {
 		var stream_name = req.query.mytext5;
-		var file = "multichain-cli chain300 create stream " + stream_name + " true";
+		var file = "multichain-cli chain500 create stream " + stream_name + " true";
 		const execSync = require('child_process').execSync;
 	 	code = execSync(file);
-	 	file = "multichain-cli chain300 subscribe " + stream_name;
+	 	file = "multichain-cli chain500 subscribe " + stream_name;
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -53,14 +53,14 @@ module.exports = function(app, passport) {
 		var data=sender+" owes "+req.user.username+" an amount of "+amount;
 		data=hexEncode(data);
 		const execSync = require('child_process').execSync;
-		var file = "multichain-cli chain300 subscribe " + stream_name;
+		var file = "multichain-cli chain500 subscribe " + stream_name;
 		code = execSync(file);
 		file=" bash ./scripts/new_transaction.sh "+data + " " + stream_name;
 		console.log(file);
 		code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain300 liststreamitems ' + stream_name;
+		var data1 = 'multichain-cli chain500 liststreamitems ' + stream_name;
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -80,14 +80,14 @@ module.exports = function(app, passport) {
 		var data=sender+" paid "+req.user.username+" an amount of "+amount;
 		data=hexEncode(data);
 		const execSync = require('child_process').execSync;
-		var file = "multichain-cli chain300 subscribe " + stream_name;
+		var file = "multichain-cli chain500 subscribe " + stream_name;
 		code = execSync(file);
 		file=" bash ./scripts/new_transaction.sh "+data + " " + stream_name;
 		console.log(file);
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain300 liststreamitems ' + stream_name;
+		var data1 = 'multichain-cli chain500 liststreamitems ' + stream_name;
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -104,9 +104,9 @@ module.exports = function(app, passport) {
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		const execSync = require('child_process').execSync;
 		var stream_name = "stream1";
-		var file = "multichain-cli chain300 subscribe stream1";
+		var file = "multichain-cli chain500 subscribe stream1";
 		code = execSync(file);
-		file = "bash ./scripts/publisher_items.sh " + "1JMV1SMvQ5qUSZqGfozVfeTgfacS2BDfrrYLCm" + " " + stream_name;
+		file = "bash ./scripts/publisher_items.sh " + hash + " " + stream_name;
 		console.log(file);
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
@@ -122,9 +122,9 @@ module.exports = function(app, passport) {
 		console.log(req.user.hash.substring(0,req.user.hash.length-1));
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		const execSync = require('child_process').execSync;
-		var file = "multichain-cli chain300 subscribe " + stream_name;
+		var file = "multichain-cli chain500 subscribe " + stream_name;
 		code = execSync(file);
-		file = "bash ./scripts/publisher_items.sh " + "1JMV1SMvQ5qUSZqGfozVfeTgfacS2BDfrrYLCm" + " " + stream_name;
+		file = "bash ./scripts/publisher_items.sh " + hash + " " + stream_name;
 		console.log(file);
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
@@ -250,10 +250,10 @@ module.exports = function(app, passport) {
 
 	app.get('/query', function(req, res) {
 		var stream_name = req.query.mytext6;
-		var file = "multichain-cli chain300 subscribe "+stream_name;
+		var file = "multichain-cli chain500 subscribe "+stream_name;
 		const execSync = require('child_process').execSync;
 	 	code = execSync(file);
-	 	file = "multichain-cli chain300 liststreamitems "+stream_name;
+	 	file = "multichain-cli chain500 liststreamitems "+stream_name;
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -267,10 +267,10 @@ module.exports = function(app, passport) {
 
 	app.get('/query1', function(req, res) {
 		var stream_name = req.query.mytext6;
-		var file = "multichain-cli chain300 subscribe "+stream_name;
+		var file = "multichain-cli chain500 subscribe "+stream_name;
 		const execSync = require('child_process').execSync;
 	 	code = execSync(file);
-	 	file = "multichain-cli chain300 liststreamitems "+stream_name;
+	 	file = "multichain-cli chain500 liststreamitems "+stream_name;
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -287,9 +287,9 @@ module.exports = function(app, passport) {
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		// var fs = require ("fs");
 	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
-	 	var data1 = 'multichaind chain300 -daemon';
-	 	var data2 = 'multichain-cli chain300 subscribe stream1';
-	 	var data = 'multichain-cli chain300 liststreamitems stream1';
+	 	var data1 = 'multichaind chain500 -daemon';
+	 	var data2 = 'multichain-cli chain500 subscribe stream1';
+	 	var data = 'multichain-cli chain500 liststreamitems stream1';
 	 	const execSync = require('child_process').execSync;
 	 	code = execSync(data1);
 	 	code = execSync(data2);

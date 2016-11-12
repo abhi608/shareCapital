@@ -1,2 +1,2 @@
 #!/bin/bash
-multichain-cli chain300 publish $2 key1 $1
+multichain-cli chain500 publish $2 key1 $1
