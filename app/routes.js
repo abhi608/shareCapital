@@ -55,11 +55,15 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/mytransactions', function(req, res) {
+		const execSync = require('child_process').execSync;
 		console.log("hash: " + req.user.hash.substring(0,req.user.hash.length-1));
-		var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		var file1 = "bash ./scripts/getaddress.sh";
+		var hash = execSync(file1);
+		hash = unescape(encodeURIComponent(hash));
+		// var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		var file = "bash ./scripts/publisher_items.sh " + hash;
 		console.log(file);
-		const execSync = require('child_process').execSync;
+		// const execSync = require('child_process').execSync;
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
