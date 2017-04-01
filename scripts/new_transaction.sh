@@ -1,2 +1,2 @@
 #!/bin/bash
-multichain-cli chain771 publish stream1 key1 $1
+multichain-cli chain333 publish stream1 key1 $1

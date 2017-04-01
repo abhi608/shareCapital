@@ -21,7 +21,7 @@ module.exports = function(app, passport) {
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain771 liststreamitems stream1';
+		var data1 = 'multichain-cli chain333 liststreamitems stream1';
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -44,7 +44,7 @@ module.exports = function(app, passport) {
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-		var data1 = 'multichain-cli chain771 liststreamitems stream1';
+		var data1 = 'multichain-cli chain333 liststreamitems stream1';
 	 	code = execSync(data1);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
@@ -55,7 +55,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/mytransactions', function(req, res) {
-		console.log(req.user.hash.substring(0,req.user.hash.length-1));
+		console.log("hash: " + req.user.hash.substring(0,req.user.hash.length-1));
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		var file = "bash ./scripts/publisher_items.sh " + hash;
 		console.log(file);
@@ -186,9 +186,9 @@ module.exports = function(app, passport) {
 		var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		// var fs = require ("fs");
 	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
-	 	var data1 = 'multichaind chain771 -daemon';
-	 	var data2 = 'multichain-cli chain771 subscribe stream1';
-	 	var data = 'multichain-cli chain771 liststreamitems stream1';
+	 	var data1 = 'multichaind chain333 -daemon';
+	 	var data2 = 'multichain-cli chain333 subscribe stream1';
+	 	var data = 'multichain-cli chain333 liststreamitems stream1';
 	 	const execSync = require('child_process').execSync;
 	 	code = execSync(data1);
 	 	code = execSync(data2);

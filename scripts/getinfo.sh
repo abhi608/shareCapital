@@ -1,2 +1,2 @@
 #!/bin/bash
-multichain-cli chain771 getinfo
+multichain-cli chain333 getinfo
