@@ -1,2 +1,2 @@
 #!/bin/bash
-multichain-cli chain333 getaddresses
+multichain-cli chain333 getaddresses | grep "^[^\{]" | grep "\".*\""
