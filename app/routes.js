@@ -105,6 +105,7 @@ module.exports = function(app, passport) {
 		var file1 = "bash ./scripts/getaddress.sh";
 		var hash = execSync(file1);
 		hash = unescape(encodeURIComponent(hash));
+		hash = hash.replace(/^\s+|\s+$/g, '');
 		// const execSync = require('child_process').execSync;
 		var stream_name = "stream1";
 		var file = "multichain-cli chain333 subscribe stream1";
