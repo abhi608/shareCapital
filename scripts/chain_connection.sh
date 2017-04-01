@@ -1,3 +1,3 @@
 #!/bin/bash
-multichaind chain500 -daemon
+multichaind chain333 -daemon
 subscribe stream1

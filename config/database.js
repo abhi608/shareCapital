@@ -3,7 +3,7 @@ module.exports = {
     'connection': {
         'host': 'localhost',
         'user': 'root',
-        'password': 'PASSWORD-HERE'
+        'password': 'vanshika608'
     },
     'database': 'BLOCKCHAIN-NAME-HERE',
     'users_table': 'users'

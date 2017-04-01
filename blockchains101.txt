@@ -10,6 +10,12 @@ Tutorials:
   http://marmelab.com/blog/2016/04/28/blockchain-for-web-developers-the-theory.html
   http://marmelab.com/blog/2016/06/14/blockchain-for-web-developers-the-truth.html
   http://scet.berkeley.edu/wp-content/uploads/BlockchainPaper.pdf
+  
+MultiChain:
+  http://www.multichain.com/download/MultiChain-White-Paper.pdf
+
+Protocol Rules for Miners:
+  https://en.bitcoin.it/wiki/Protocol_rules#.22tx.22_messages
 
 NodeJS libraries:
   https://github.com/IBM-Blockchain/ibm-blockchain-js
