@@ -1,0 +1,52 @@
+<!doctype html>
+	<html>
+		<head>
+			<title>ShareCapital</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+			<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+		</head>
+		<body>
+			<nav class="navbar navbar-default">
+		  		<div class="container-fluid">
+		    		<div class="navbar-header">
+		      			<a class="navbar-brand" href="/">Share Capital</a>
+		    		</div>
+		    		<ul class="nav navbar-nav">
+		      			<li><a href="/onlogin">Transaction History</a></li>
+		      			<li><a href="/profile">Profile</a></li>
+		      			<li><a href="/transaction">New Transaction</a></li>
+		      			<li><a href="/getinfo">Blockchain Info</a></li>
+		      			<li><a href="/initiateDeal">Initiate Trade</a></li>
+		      			<li class="active"><a href="/decodeDeal">Decode Trade</a></li>
+		      			<li><a href="/acceptDeal">Accept Trade</a></li>
+
+		    		</ul>
+		  		</div>
+			</nav>
+		  
+<div class="container">
+
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span>Trade Information</h3>
+
+					<p>
+						<strong>Info: </strong>: <%= user %><br>
+					</p>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+		</body>
+	</html>

@@ -98,6 +98,120 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/deal1', function(req, res) {
+		var receive_usd=req.query.mytext;
+		var send_rs=req.query.mytext2;
+		var stream_name=req.query.mytext8;
+		const execSync = require('child_process').execSync;
+		var file = "bash ./scripts/getaddress.sh";
+		var result = execSync(file);
+		file = "multichain-cli chain333 preparelockunspentfrom " + result +  ' ' + "'{" + '"JPY":' + send_rs + "}'";	 //prepare lock on jpy(rs)  return the txid object
+		console.log(file);
+		result = execSync(file);
+		result = unescape(encodeURIComponent(result));
+		
+		// result.toString();
+
+		result = result.split('\n');
+		result.splice(0,2);
+		result = result.join('\n');
+		console.log(result);	
+		result=JSON.parse(result);
+		var txid = result.txid;
+		var vout = result.vout;
+		file = 'multichain-cli chain333 createrawexchange ' + txid + ' ' + vout + ' ' + "'{" + '"USD":' + receive_usd + "}'";
+		result = execSync(file);  //result should contain hexadecimal bob
+		result = unescape(encodeURIComponent(result));
+		result = result.split('\n');
+		result.splice(0,2);
+		result = result.join('\n');
+		file = 'multichain-cli chain333 publish ' + stream_name + ' key555 ' + result;
+		result = execSync(file);
+		res.redirect('/mytransactions');
+	});
+
+	app.get('/decodeDeal', function(req,res){
+		const execSync = require('child_process').execSync;
+		var file = 'bash ./scripts/readStream.sh';  //liststreamitems stream5
+		var result = execSync(file);  //will contain an object
+		result = unescape(encodeURIComponent(result));
+		result = JSON.parse(result);
+		var length = result.length;
+		var blob;
+		var i;
+		for(i = length-1; i > -1; i--){
+			if(result[i].key == 'key555'){
+				blob = result[i].data;
+				i=-1
+			}
+		}
+
+		file = 'multichain-cli chain333 decoderawexchange ' + blob;
+		result = execSync(file);
+		result = unescape(encodeURIComponent(result));
+		var code = result;
+		//send this result to frontend
+		res.render('decode.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
+	app.get('/acceptdeal1', function(req, res) {
+		// var receive_usd=req.query.mytext;
+		// var send_rs=req.query.mytext2;
+		var stream_name=req.query.mytext8;
+		const execSync = require('child_process').execSync;
+		var file = 'bash ./scripts/readStream.sh';  //liststreamitems stream5
+		var result = execSync(file);  //will contain an object
+		result = unescape(encodeURIComponent(result));
+		result = JSON.parse(result);
+		var length = result.length;
+		var blob;
+		for(var i = length-1; i>=0; i--){
+			if(result[i].key == 'key555'){
+				blob = result[i].data;
+				i=-1
+			}
+		}
+
+		file = 'multichain-cli chain333 decoderawexchange ' + blob;
+		result = execSync(file);
+		result = unescape(encodeURIComponent(result));
+		result = result.split('\n');
+		result.splice(0,2);
+		result = result.join('\n');
+		result = JSON.parse(result);
+		var receive_jpy = result.offer.assets[0].qty;
+		var send_usd = result.ask.assets[0].qty;
+
+
+
+		var file = "bash ./scripts/getaddress.sh";
+		var result = execSync(file);
+		file = "multichain-cli chain333 preparelockunspentfrom " + result +  ' ' + "'{" + '"USD":' + send_usd + "}'";	 //prepare lock on jpy(rs)  return the txid object
+		result = execSync(file);
+		result = unescape(encodeURIComponent(result));
+		result = result.split('\n');
+		result.splice(0,2);
+		result = result.join('\n');
+		result=JSON.parse(result);
+		var txid = result.txid;
+		var vout = result.vout;
+		file = 'multichain-cli chain333 appendrawexchange ' + blob + ' ' + txid + ' ' + vout + ' ' + "'{" + '"JPY":' + receive_jpy + "}'";
+		result = execSync(file);  //result should contain hexadecimal bob
+		result = unescape(encodeURIComponent(result));
+		result = result.split('\n');
+		result.splice(0,2);
+		result = result.join('\n');
+		result = JSON.parse(result);
+		console.log(result.hex);
+		file = 'multichain-cli chain333 sendrawtransaction ' + result.hex;
+		result = execSync(file);
+		// file = 'multichain-cli chain333 publish ' + stream_name + ' key555 ' + result;
+		// result = execSync(file);
+		res.redirect('/mytransactions');
+	});
+
 	app.get('/mytransactions', function(req, res) {
 		const execSync = require('child_process').execSync;
 		console.log("hash: " + req.user.hash.substring(0,req.user.hash.length-1));
@@ -115,7 +229,7 @@ module.exports = function(app, passport) {
 	 	code = execSync(file);
 	 	code = unescape(encodeURIComponent(code));
 	 	console.log(code);
-	 			res.render('mytransactions.ejs', {
+	 	res.render('mytransactions.ejs', {
 			user : code, // get the user out of session and pass to template
 			stream_name : stream_name
 		});
@@ -162,6 +276,10 @@ module.exports = function(app, passport) {
 		res.render('transaction.ejs'); // load the index.ejs file
 	});
 
+	app.get('/initiateDeal', function(req, res) {
+		res.render('initiateDeal.ejs'); // load the index.ejs file
+	});
+
 	// app.get('/onlogin', function(req, res) {
 	// 	res.render('onLogin.ejs'); // load the index.ejs file
 	// });
@@ -189,6 +307,10 @@ module.exports = function(app, passport) {
 
 	app.get('/contact', function(req, res) {
 		res.render('contact.ejs'); // load the index.ejs file
+	});
+
+	app.get('/acceptDeal', function(req, res) {
+		res.render('acceptDeal.ejs'); // load the index.ejs file
 	});
 
 	// =====================================
