@@ -121,6 +121,31 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/mytransactions1', function(req, res) {
+		var stream_name = req.query.mytext6;
+		const execSync = require('child_process').execSync;
+		// console.log("hash: " + req.user.hash.substring(0,req.user.hash.length-1));
+		// var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		var file1 = "bash ./scripts/getaddress.sh";
+		var hash = execSync(file1);
+		hash = unescape(encodeURIComponent(hash));
+		hash = hash.replace(/^\s+|\s+$/g, '');
+		// console.log(req.user.hash.substring(0,req.user.hash.length-1));
+		// var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		// const execSync = require('child_process').execSync;
+		var file = "multichain-cli chain333 subscribe " + stream_name;
+		code = execSync(file);
+		file = "bash ./scripts/publisher_items.sh " + hash + " " + stream_name;
+		console.log(file);
+	 	code = execSync(file);
+	 	code = unescape(encodeURIComponent(code));
+	 	console.log(code);
+		res.render('mytransactions.ejs', {
+			user : code, // get the user out of session and pass to template
+			stream_name : stream_name
+		});
+	});
+
 	app.get('/getinfo', function(req, res) {
 		var file = "bash ./scripts/getinfo.sh";
 		console.log(file);
