@@ -40,14 +40,14 @@ For trade between records and money, we use MultiChain's Atomic Exchange Transac
 
 Now, the actual requirement is that only Y should be able to read it and hence a secure communication. We propose to perform application-level sandboxing to meet the requirements. Now when Y gets a request from X, if he wants to accept the trade, he similarly creates a locked transaction with the requested data. This generates a json file whose contents are used to append to the partial transaction. This outputs an even longer hexadecimal blob of text which is used to complete the transaction by sending it to miners for confirmation. 
 
-There is a third type of transactions which are generic and can be done between any 2 users which involve sending some money to a user or asking some user for money.   
+There is a third type of transactions which are generic and can be done between any 2 users which involve sending some money to a user or asking some user for money. 
 
 
-Instructions for Running the website:
+Instructions for Running the website on a linux based system:
 
-Requirements: 1. You need to have a linux OS with blockchain installed on it. You can install it easily from here: http://www.multichain.com
-2. Install nodejs too.
-3. Install mysql on your system.
+Requirements: 1. You need to have a linux OS with multichain installed on it. You can install it easily from here: http://www.multichain.com
+2. Install nodejs.
+3. Install mysql.
 Now, you have all the necessary things that you need to start your nodejs server
 To run the server, do the following:
 	1. Clone the repo.
@@ -56,7 +56,7 @@ To run the server, do the following:
 	4. Create the database schema: `node scripts/create_database.js`
 	5. Launch: `node server.js`
 	6. Visit in your browser at: `http://localhost:8084`
-Note: Currently, multichain doesn't offer any APIs other than bash APIs. So, currently, this website won't run on Windows PC. So, we can make it available to the general public like it is done in the case of Tor browser. However, once there are APIs available(in the long run), we can launch it as a website. Because of non avilability of API, currently, you need to have two computers with the above mentioned things installed and their own local servers running to test this product.
+Note: Currently, multichain doesn't offer any APIs other than bash APIs. So, we can make it available to the general public like it is done in the case of Tor browser. However, once there are APIs available(in the long run), we can launch it as a website. Because of non avilability of API, currently, you need to have two computers with the above mentioned things installed and their own local servers running to test this product.
 
 4.
 	i) Creating a blockchain
@@ -99,16 +99,16 @@ Note: Currently, multichain doesn't offer any APIs other than bash APIs. So, cur
 
 	iii) Once you have logged in, there would be many navigation bars which are self-explanatory. 
 
-	iv) In the new transaction tab, you can generate a receipt of the queries which are present there. You can create stream, but remember whenever entering any information about stream, stream name should be of the format stream<some number> (e.g.: stream22), otherwise the app would crash (We realize that we have not handled many error conditions, but given that we have our other projects/assignments, it is somewhat acceptable... or at least we think so). By default, stream of name stream1 is already created, so you can work on tht stream.
+	iv) In the new transaction tab, you can generate a receipt of the queries which are present there. You can create stream, but remember whenever entering any information about stream, stream name should be of the format stream<some number> (e.g.: stream22), otherwise the app would crash (We realize that we have not handled many error conditions due to time constraints). By default, stream of name stream1 is already created, so you can work on that stream.
 
-	v) No comes the trade part, here, you can initiate a trade by navigating to Initiate Trade bar. Currently, a user initiating a trade can only ask for USD in exchange of rupees (of course, imaginary :P). And the other user (from another computer), can accept tht trade using Accept Trade bar.
+	v) No comes the trade part, here, you can initiate a trade by navigating to Initiate Trade bar. Currently, a user initiating a trade can only ask for USD in exchange of rupees (of course, imaginary). And the other user (from another computer), can accept tht trade using Accept Trade bar.
 
 	vi) Once the trade is complete, you can check your wallet balance and wallet transactions. 
 
 
-	A big question, why does the login feature exist if only one user can log in from a computer? Answer is once the APIs are available, and we deploy this website on www, different users can log in using thi feature.
+	A big question, why does the login feature exist if only one user can log in from a computer? Answer is once the APIs are available, and we deploy this website on www, different users can log in using this feature.
 
-Many of the things are/need to be hard-coded currently. This is beause we were short of time and of course, in the long run, the missing patches can be filled.
+Many of the things are/need to be hard-coded currently. This is because we were short of time and of course, in the long run, the missing patches can be filled.
 
 
 
