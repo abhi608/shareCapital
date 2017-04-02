@@ -156,6 +156,30 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/getbalance', function(req,res){
+		const execSync = require('child_process').execSync;
+		var file = 'multichain-cli chain333 gettotalbalances 0';
+		var result = execSync(file);
+		result = unescape(encodeURIComponent(result));
+		var code = result;
+		//send this result to frontend
+		res.render('getBalance.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
+	app.get('/listtransactions', function(req,res){
+		const execSync = require('child_process').execSync;
+		var file = 'multichain-cli chain333 listwallettransactions 1';
+		var result = execSync(file);
+		result = unescape(encodeURIComponent(result));
+		var code = result;
+		//send this result to frontend
+		res.render('listTransactions.ejs', {
+			user : code // get the user out of session and pass to template
+		});
+	});
+
 	app.get('/acceptdeal1', function(req, res) {
 		// var receive_usd=req.query.mytext;
 		// var send_rs=req.query.mytext2;
@@ -214,7 +238,7 @@ module.exports = function(app, passport) {
 
 	app.get('/mytransactions', function(req, res) {
 		const execSync = require('child_process').execSync;
-		console.log("hash: " + req.user.hash.substring(0,req.user.hash.length-1));
+		// console.log("hash: " + req.user.hash.substring(0,req.user.hash.length-1));
 		// var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		var file1 = "bash ./scripts/getaddress.sh";
 		var hash = execSync(file1);
@@ -416,8 +440,8 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/onlogin', function(req, res) {
-		console.log(req.user.hash.substring(0,req.user.hash.length-1));
-		var hash = req.user.hash.substring(0,req.user.hash.length-1);
+		// console.log(req.user.hash.substring(0,req.user.hash.length-1));
+		// var hash = req.user.hash.substring(0,req.user.hash.length-1);
 		// var fs = require ("fs");
 	 	// var data = fs.readFileSync("./scripts/chain_connection.sh","utf8");
 	 	var data1 = 'multichaind chain333 -daemon';
