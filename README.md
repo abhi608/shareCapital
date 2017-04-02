@@ -4,15 +4,6 @@ Team Members:
 
 Nikhil Vanjani, Abhishek Verma, Kshitij Jaggi, Tarun Yadav, Anmol Porwal, Shikhar Mahajan
 
-Instructions:
-
-1. Clone the repo.
-2. Install packages: `npm install`
-3. Edit the database configuration: `config/database.js`
-4. Create the database schema: `node scripts/create_database.js`
-5. Launch: `node server.js`
-6. Visit in your browser at: `http://localhost:8084`
-
 Idea: 
 
 The Future of Health
@@ -50,6 +41,77 @@ For trade between records and money, we use MultiChain's Atomic Exchange Transac
 Now, the actual requirement is that only Y should be able to read it and hence a secure communication. We propose to perform application-level sandboxing to meet the requirements. Now when Y gets a request from X, if he wants to accept the trade, he similarly creates a locked transaction with the requested data. This generates a json file whose contents are used to append to the partial transaction. This outputs an even longer hexadecimal blob of text which is used to complete the transaction by sending it to miners for confirmation. 
 
 There is a third type of transactions which are generic and can be done between any 2 users which involve sending some money to a user or asking some user for money.   
+
+
+Instructions for Running the website:
+
+Requirements: 1. You need to have a linux OS with blockchain installed on it. You can install it easily from here: http://www.multichain.com
+2. Install nodejs too.
+3. Install mysql on your system.
+Now, you have all the necessary things that you need to start your nodejs server
+To run the server, do the following:
+	1. Clone the repo.
+	2. Install packages: `npm install`
+	3. Edit the database configuration: `config/database.js`
+	4. Create the database schema: `node scripts/create_database.js`
+	5. Launch: `node server.js`
+	6. Visit in your browser at: `http://localhost:8084`
+Note: Currently, multichain doesn't offer any APIs other than bash APIs. So, currently, this website won't run on Windows PC. So, we can make it available to the general public like it is done in the case of Tor browser. However, once there are APIs available(in the long run), we can launch it as a website. Because of non avilability of API, currently, you need to have two computers with the above mentioned things installed and their own local servers running to test this product.
+
+4.
+	i) Creating a blockchain
+		First we will create a new blockchain named chain333. On the first server, run these command:
+		multichain-util create chain333
+		Initialize the blockchain, including mining the genesis block:
+		multichaind chain333 -daemon
+		You should be told that the server has started and then after a few seconds, that the genesis block was found. You should also be given the node address that others can use to connect to this chain.
+		Replace <192.168.0.114:9221> in scripts/getHash.sh by the above generated [ip-address]:[port]
+
+		Run the following command on second server:
+			multichaind chain333@[ip-address]:[port]
+		You should be told that the blockchain was successfully initialized, but you do not have permission to connect. You should also be shown a message containing an address in this node’s wallet. Note this address
+
+		Back on first server:
+			multichain-cli chain555 grant <wallet-address> connect  
+
+	ii) Creating a stream
+			Let’s create a stream, which can be used for general data storage and retrieval. On the first server:
+			create stream stream1 false
+			subscribe stream1
+			grant <wallet-address> receive,send
+			grant <wallet-address> stream1.write
+
+	iii) Issuing the assets
+			On the first server:
+			listaddresses
+			getaddresses
+			This would display a wallet address. Note this address. Let it be <wallet-address_tmp>
+			Now on first server only,
+			issue <wallet-address_tmp> USD 2000 0.01
+			A 64-character hexadecimal transaction ID should be shown for the transaction in which the USD asset was created.
+			Now let’s issue another asset to the second node’s address, after granting it the necessary permissions. Still on the first server:
+			grant <wallet-address> receive, send
+			issue <wallet-address> JPY 50000 1
+
+
+	ii) On the second server, open your browser and go to localhost:8204. The website is up there.
+		Now signup and then login.
+
+	iii) Once you have logged in, there would be many navigation bars which are self-explanatory. 
+
+	iv) In the new transaction tab, you can generate a receipt of the queries which are present there. You can create stream, but remember whenever entering any information about stream, stream name should be of the format stream<some number> (e.g.: stream22), otherwise the app would crash (We realize that we have not handled many error conditions, but given that we have our other projects/assignments, it is somewhat acceptable... or at least we think so). By default, stream of name stream1 is already created, so you can work on tht stream.
+
+	v) No comes the trade part, here, you can initiate a trade by navigating to Initiate Trade bar. Currently, a user initiating a trade can only ask for USD in exchange of rupees (of course, imaginary :P). And the other user (from another computer), can accept tht trade using Accept Trade bar.
+
+	vi) Once the trade is complete, you can check your wallet balance and wallet transactions. 
+
+
+	A big question, why does the login feature exist if only one user can log in from a computer? Answer is once the APIs are available, and we deploy this website on www, different users can log in using thi feature.
+
+Many of the things are/need to be hard-coded currently. This is beause we were short of time and of course, in the long run, the missing patches can be filled.
+
+
+
 
 
 
